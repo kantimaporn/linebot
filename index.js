@@ -2,46 +2,50 @@ require("dotenv").config()
 
 const express = require("express")
 const line = require("@line/bot-sdk")
-//const db = require("./config/db")
 
 const app = express()
 
+// LINE config
 const config = {
- channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
- channelSecret: process.env.CHANNEL_SECRET
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+  channelSecret: process.env.CHANNEL_SECRET
 }
 
 const client = new line.Client(config)
 
+// test route
+app.get("/", (req, res) => {
+  res.send("LINE Bot Server Running 🚀")
+})
+
+// webhook
 app.post("/webhook", line.middleware(config), async (req, res) => {
+  const events = req.body.events
 
- const events = req.body.events
+  try {
+    await Promise.all(events.map(handleEvent))
+    res.status(200).end()
+  } catch (err) {
+    console.error(err)
+    res.status(500).end()
+  }
+})
 
- for (let event of events) {
+// handle message
+async function handleEvent(event) {
 
-  if (event.type === "message") {
-
-   const userId = event.source.userId
-
-//   db.query(
- //   "INSERT INTO users (line_user_id) VALUES (?)",
- //   [userId],
-  //  (err) => {
-   //   if (err) console.error(err)
- //   }
-//)
-
-   await client.replyMessage(event.replyToken, {
-    type: "text",
-    text: "สวัสดีจาก bot ของฉัน 👋"
-   })
-
+  if (event.type !== "message" || event.message.type !== "text") {
+    return null
   }
 
- }
+  const userId = event.source.userId
+  console.log("User:", userId)
 
- res.status(200).end()
-})
+  return client.replyMessage(event.replyToken, {
+    type: "text",
+    text: "สวัสดีจาก bot ของฉัน 👋"
+  })
+}
 
 const PORT = process.env.PORT || 3000
 
