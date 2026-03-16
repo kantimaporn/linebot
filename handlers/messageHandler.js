@@ -1,4 +1,5 @@
 const generateNumberFlex = require("../flex/numberFlex")
+const orderService = require("../services/orderService")
 
 async function handleMessage(event, client) {
 
@@ -13,6 +14,17 @@ async function handleMessage(event, client) {
         const flex = generateNumberFlex()
 
         return client.replyMessage(event.replyToken, flex)
+    }
+    if (/^\d{2}$/.test(text)) {
+
+        console.log("Selected number:", text)
+        const userId = event.source.userId
+
+        const result = await orderService.reserve(text, userId)
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: `คุณเลือกเลข ${text}`
+        })
     }
 }
 

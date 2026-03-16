@@ -24,8 +24,16 @@ async function reserveNumber(number, userId) {
 
     return result.rowCount > 0
 }
+async function getAllNumbers(){
 
+    const result = await db.query(
+        "SELECT number,status FROM orders ORDER BY number"
+    )
+
+    return result.rows
+}
 module.exports = {
     getOrder,
-    reserveNumber
+    reserveNumber,
+    getAllNumbers
 }
