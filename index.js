@@ -38,6 +38,7 @@ async function handleEvent(event) {
     return null
   }
 
+  console.log(event.message)
   const userId = event.source.userId
   console.log("User:", userId)
 
