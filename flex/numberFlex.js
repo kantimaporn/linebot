@@ -1,57 +1,44 @@
-function generateNumberFlex(numbers) {
+function generateNumberFlex() {
 
     const bubbles = []
+    let numbers = []
+
+    for (let i = 0; i < 100; i++) {
+        numbers.push(i.toString().padStart(2, "0"))
+    }
 
     for (let i = 0; i < numbers.length; i += 20) {
 
         const slice = numbers.slice(i, i + 20)
-
         const rows = []
 
-        for (let j = 0; j < slice.length; j += 4) {
+        for (let j = 0; j < slice.length; j += 5) {
 
-            const rowNumbers = slice.slice(j, j + 4)
+            const rowNumbers = slice.slice(j, j + 5)
 
             rows.push({
                 type: "box",
                 layout: "horizontal",
                 spacing: "sm",
-                contents: rowNumbers.map(item => {
-
-                    const isReserved = item.status === "reserved"
-
-                    return {
-                        type: "button",
-                        style: isReserved ? "primary" : "secondary",
-                        color: isReserved ? "#ff5555" : undefined,
-                        height: "sm",
-                        flex: 1,
-                        action: {
-                            type: "message",
-                            label: isReserved ? `${item.number}❌` : item.number,
-                            text: item.number
-                        }
+                contents: rowNumbers.map(num => ({
+                    type: "button",
+                    style: "secondary",
+                    height: "sm",
+                    action: {
+                        type: "message",
+                        label: num,
+                        text: num
                     }
-                })
+                }))
             })
         }
 
         bubbles.push({
             type: "bubble",
-            size: "giga",
             body: {
                 type: "box",
                 layout: "vertical",
-                spacing: "md",
-                contents: [
-                    {
-                        type: "text",
-                        text: `เลข ${slice[0].number} - ${slice[slice.length-1].number}`,
-                        weight: "bold",
-                        size: "lg"
-                    },
-                    ...rows
-                ]
+                contents: rows
             }
         })
     }
