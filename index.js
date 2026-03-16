@@ -44,90 +44,49 @@ async function handleEvent(event) {
     if (text === "เลข") {
 
         const flexMessage = {
-            type: "flex",
-            altText: "เลือกหมายเลขที่ต้องการ",
-            contents: {
-                type: "bubble",
-                body: {
-                    type: "box",
-                    layout: "vertical",
-                    contents: [
+            "type": "flex",
+            "altText": "เลือกหมายเลข 00-99",
+            "contents": {
+                "type": "bubble",
+                "size": "giga",
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "lg",
+                    "contents": [
                         {
-                            type: "text",
-                            text: "เลือกเลขที่ต้องการ",
-                            weight: "bold",
-                            size: "lg"
+                            "type": "text",
+                            "text": "เลือกหมายเลข",
+                            "weight": "bold",
+                            "size": "xl"
                         },
+
                         {
-                            type: "box",
-                            layout: "horizontal",
-                            spacing: "sm",
-                            margin: "md",
-                            contents: [
-                                {
-                                    type: "button",
-                                    style: "secondary",
-                                    action: {
-                                        type: "message",
-                                        label: "00",
-                                        text: "00"
-                                    }
-                                },
-                                {
-                                    type: "button",
-                                    style: "secondary",
-                                    action: {
-                                        type: "message",
-                                        label: "01",
-                                        text: "01"
-                                    }
-                                },
-                                {
-                                    type: "button",
-                                    style: "secondary",
-                                    action: {
-                                        type: "message",
-                                        label: "02",
-                                        text: "02"
-                                    }
-                                }
+                            "type": "box",
+                            "layout": "horizontal",
+                            "spacing": "sm",
+                            "contents": [
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "00", "text": "00" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "01", "text": "01" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "02", "text": "02" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "03", "text": "03" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "04", "text": "04" } }
                             ]
                         },
+
                         {
-                            type: "box",
-                            layout: "horizontal",
-                            spacing: "sm",
-                            margin: "sm",
-                            contents: [
-                                {
-                                    type: "button",
-                                    style: "secondary",
-                                    action: {
-                                        type: "message",
-                                        label: "03",
-                                        text: "03"
-                                    }
-                                },
-                                {
-                                    type: "button",
-                                    style: "secondary",
-                                    action: {
-                                        type: "message",
-                                        label: "04",
-                                        text: "04"
-                                    }
-                                },
-                                {
-                                    type: "button",
-                                    style: "secondary",
-                                    action: {
-                                        type: "message",
-                                        label: "05",
-                                        text: "05"
-                                    }
-                                }
+                            "type": "box",
+                            "layout": "horizontal",
+                            "spacing": "sm",
+                            "contents": [
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "05", "text": "05" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "06", "text": "06" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "07", "text": "07" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "08", "text": "08" } },
+                                { "type": "button", "style": "secondary", "action": { "type": "message", "label": "09", "text": "09" } }
                             ]
                         }
+
                     ]
                 }
             }
@@ -145,10 +104,12 @@ async function handleEvent(event) {
     }
 
     // default
-    return client.replyMessage(event.replyToken, {
-        type: "text",
-        text: "พิมพ์ 'เลข' เพื่อเลือกหมายเลข"
-    })
+    if (text === "บอท") {
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "พิมพ์ 'เลข' เพื่อเลือกหมายเลข"
+        })
+    }
 }
 const PORT = process.env.PORT || 3000
 
