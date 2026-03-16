@@ -11,9 +11,11 @@ async function handleMessage(event, client) {
 
     if (text === "เลข") {
 
-        const flex = generateNumberFlex()
+       const numbers = await orderService.getNumbers()
 
-        return client.replyMessage(event.replyToken, flex)
+    const flex = generateNumberFlex(numbers)
+
+    return client.replyMessage(event.replyToken, flex)
     }
     if (/^\d{2}$/.test(text)) {
 
